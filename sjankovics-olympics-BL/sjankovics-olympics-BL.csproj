@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>sjankovics_olympics_BL</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\sjankovics-olympics-Database\sjankovics-olympics-Database.csproj" />
+  </ItemGroup>
+
+</Project>
