@@ -12,9 +12,9 @@ namespace sjankovics_olympics_BL.AthleteLogic
 {
     public class AthleteLogic : IAthleteLogic
     {
-        private OlympicsContext context;
+        private olympicsContext context;
 
-        public AthleteLogic(OlympicsContext _context)
+        public AthleteLogic(olympicsContext _context)
         {
             context = _context;
         }
@@ -63,6 +63,7 @@ namespace sjankovics_olympics_BL.AthleteLogic
                 newAthleteDataBase.Height = newAthlete.Height;
                 newAthleteDataBase.Weight = newAthlete.Weight;
                 newAthleteDataBase.Name = newAthlete.Name;
+                newAthleteDataBase.Gender = newAthlete.Gender;
                 newAthleteDataBase.Nation = newAthlete.Nation;
                 newAthleteDataBase.Sport = newAthlete.Sport;
 

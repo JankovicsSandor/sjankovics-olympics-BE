@@ -11,9 +11,9 @@ namespace sjankovics_olympics_Database.Models
         public string Name { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Nation { get; set; }
-        public string Gender { get; set; }
-        public double Height { get; set; }
-        public double Weight { get; set; }
+        public double? Height { get; set; }
+        public double? Weight { get; set; }
         public string Sport { get; set; }
+        public string Gender { get; set; }
     }
 }

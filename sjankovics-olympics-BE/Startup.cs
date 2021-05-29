@@ -19,6 +19,7 @@ namespace sjankovics_olympics_BE
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -30,6 +31,16 @@ namespace sjankovics_olympics_BE
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.AllowAnyMethod();
+                                      builder.AllowAnyOrigin();
+                                      builder.AllowAnyHeader();
+                                  });
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -38,8 +49,8 @@ namespace sjankovics_olympics_BE
 
             services.AddTransient<IAthleteLogic, AthleteLogic>();
 
-            services.AddDbContext<OlympicsContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("aspnetcore")));
+            services.AddDbContext<olympicsContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("OlimpicsDatabase")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,11 +62,11 @@ namespace sjankovics_olympics_BE
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "sjankovics_olympics_BE v1"));
             }
-
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
