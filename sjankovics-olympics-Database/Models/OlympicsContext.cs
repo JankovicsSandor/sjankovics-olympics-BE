@@ -47,6 +47,10 @@ namespace sjankovics_olympics_Database.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Gender)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Nation)
                     .HasMaxLength(5)
                     .IsUnicode(false);
