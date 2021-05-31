@@ -29,12 +29,7 @@ namespace sjankovics_olympics_BL.Input
         {
             bool valid = true;
 
-            if (string.IsNullOrEmpty(Name) || Name.Length < 2)
-            {
-                valid = false;
-            }
-
-            if (DateOfBirth == default(DateTime))
+            if (string.IsNullOrEmpty(Name) || Name.Length < 2 || Name.Length >= 50)
             {
                 valid = false;
             }

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using sjankovics_olympics_BL.AthleteLogic;
+using sjankovics_olympics_BL.Repository;
 using sjankovics_olympics_Database.Models;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,7 @@ namespace sjankovics_olympics_BE
             });
 
             services.AddTransient<IAthleteLogic, AthleteLogic>();
+            services.AddTransient<IAthleteRepository, AthleteRepository>();
 
             services.AddDbContext<olympicsContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("OlimpicsDatabase")));
@@ -62,7 +64,7 @@ namespace sjankovics_olympics_BE
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "sjankovics_olympics_BE v1"));
             }
-            
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

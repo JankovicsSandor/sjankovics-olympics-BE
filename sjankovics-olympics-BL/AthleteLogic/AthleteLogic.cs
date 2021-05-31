@@ -1,4 +1,5 @@
 ﻿using sjankovics_olympics_BL.Input;
+using sjankovics_olympics_BL.Repository;
 using sjankovics_olympics_Database.Input;
 using sjankovics_olympics_Database.Models;
 using System;
@@ -12,17 +13,18 @@ namespace sjankovics_olympics_BL.AthleteLogic
 {
     public class AthleteLogic : IAthleteLogic
     {
-        private olympicsContext context;
+        private IAthleteRepository athleteRepo;
 
-        public AthleteLogic(olympicsContext _context)
+        public AthleteLogic(IAthleteRepository _athleteRepository)
         {
-            context = _context;
+            athleteRepo = _athleteRepository;
         }
 
         public IQueryable<Athlete> GetAllAthlete()
         {
-            return context.Athletes;
+            return athleteRepo.GetAllAthlete();
         }
+
 
         public Athlete GetOneAthlete(int athleteId)
         {
@@ -30,7 +32,7 @@ namespace sjankovics_olympics_BL.AthleteLogic
             {
                 throw new ArgumentException(nameof(athleteId));
             }
-            return GetAllAthlete().FirstOrDefault(e => e.Id == athleteId);
+            return athleteRepo.GetAllAthlete().FirstOrDefault(e => e.Id == athleteId);
         }
 
         public void UpdateOneAthlete(int athleteId, UpdateAthleteModel updatedAthleteModel)
@@ -42,11 +44,11 @@ namespace sjankovics_olympics_BL.AthleteLogic
                 actualAthlete.Height = updatedAthleteModel.Height;
                 actualAthlete.Weight = updatedAthleteModel.Weight;
                 actualAthlete.Name = updatedAthleteModel.Name;
+                actualAthlete.Gender = updatedAthleteModel.Gender;
                 actualAthlete.Nation = updatedAthleteModel.Nation;
                 actualAthlete.Sport = updatedAthleteModel.Sport;
 
-                context.Athletes.Update(actualAthlete);
-                context.SaveChanges();
+                athleteRepo.UpdateOneAthlete(actualAthlete);
             }
             else
             {
@@ -67,8 +69,7 @@ namespace sjankovics_olympics_BL.AthleteLogic
                 newAthleteDataBase.Nation = newAthlete.Nation;
                 newAthleteDataBase.Sport = newAthlete.Sport;
 
-                context.Athletes.Add(newAthleteDataBase);
-                context.SaveChanges();
+                newAthleteDataBase = athleteRepo.InsertNewAthlete(newAthleteDataBase);
 
                 return newAthleteDataBase;
             }
